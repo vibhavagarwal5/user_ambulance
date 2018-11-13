@@ -1,51 +1,31 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import MapView from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
+import React, { Component } from 'react';
+import { Provider, connect } from 'react-redux';
+import { Scene, Drawer, Router } from 'react-native-router-flux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-const origin = {
-	latitude: 37.3318456,
-	longitude: -122.0296002
-};
-const destination = {
-	latitude: 37.787514,
-	longitude: -122.427175
+import MapScreen from './src/components/map';
 
-};
-const GOOGLE_MAPS_APIKEY = 'AIzaSyAwv6K_MaZEA7nozTxCU-wTWAn2H8Ct5oo';
+import configureStore from './src/utils/store';
+let { store, persistor } = configureStore();
+const ConnectedRouter = connect()(Router);
 
 export default class App extends Component {
 	render() {
 		return (
-			<View style={styles.container}>
-				<MapView
-					style={styles.map}
-					region={{
-						latitude: 37.78825,
-						longitude: -122.4324,
-						latitudeDelta: 0.015,
-						longitudeDelta: 0.0121,
-					}}
-				>
-					<MapViewDirections
-						origin={origin}
-						destination={destination}
-						apikey={GOOGLE_MAPS_APIKEY}
-					/>
-				</MapView>
-			</View>
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<ConnectedRouter>
+						<Scene key="root">
+							<Scene
+								key="map"
+								hideNavBar
+								component={MapScreen}
+								initial
+							/>
+						</Scene>
+					</ConnectedRouter>
+				</PersistGate>
+			</Provider>
 		);
 	}
 }
-const styles = StyleSheet.create({
-	container: {
-		...StyleSheet.absoluteFillObject,
-		height: null,
-		width: null,
-		justifyContent: 'flex-end',
-		alignItems: 'center',
-	},
-	map: {
-		...StyleSheet.absoluteFillObject,
-	},
-});

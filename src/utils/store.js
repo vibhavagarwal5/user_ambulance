@@ -13,17 +13,16 @@ import { AsyncStorage } from 'react-native';
 //Creating the config for the redux-persist for persisting the data upon data load.
 const config = {
 	key: 'root',
-	storage: AsyncStorage, //Since AsyncStorage is not responding properly
-	debug: true
+	storage: AsyncStorage,
+	debug: true,
 	// whitelist: ['login', 'incident'],
-	// transforms: [
-	// 	createWhitelistFilter('incident', [
-	// 		'notificationStack',
-	// 		'user_incidents'
-	// 	]),
-	// 	createWhitelistFilter('emergencyPlaces', []),
-	// 	createWhitelistFilter('slides')
-	// ]
+	transforms: [
+		createWhitelistFilter('location', [
+			'curr_coordinates',
+		])
+		// createWhitelistFilter('emergencyPlaces', []),
+		// createWhitelistFilter('slides')
+	]
 };
 
 //Linking all the reducers with the redux-persist and applying all the middlewares to it.
