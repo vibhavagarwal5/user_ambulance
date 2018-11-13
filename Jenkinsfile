@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'docker.io/aossie/react-native-ci:version1.3'
+      image 'aossie/react-native-ci:version1.3'
     }
 
   }
@@ -9,7 +9,7 @@ pipeline {
     stage('Build') {
       agent {
         docker {
-          image 'docker.io/aossie/react-native-ci:version1.3'
+          image 'aossie/react-native-ci:version1.3'
         }
 
       }
