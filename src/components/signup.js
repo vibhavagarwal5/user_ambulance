@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {styles} from '../assets/login_styles'
 
-class SignIn extends Component {
+class SignUp extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
@@ -17,14 +17,14 @@ class SignIn extends Component {
         };
     }
 
-    handleSignIn(){
+    handleSignUp(){
         Actions.map();
     }
     
 	render() {
 		return (
 			<View style={styles.container}>
-                    <Text style={styles.heading}>Ambulance Services</Text>
+                    <Text style={styles.heading}>Create an account</Text>
                     <Text>Name</Text>
                     <TextInput
                         ref={input => (this.unameInput = input)}
@@ -59,19 +59,11 @@ class SignIn extends Component {
                         underlineColorAndroid='black'
                     />
 					<TouchableOpacity
-                        onPress={() => this.handleSignIn()}
+                        onPress={() => this.handleSignUp()}
                         style={styles.loginButton}
 					>
-						<Text style={styles.loginText}> Login </Text>
+						<Text style={styles.loginText}> Register </Text>
 					</TouchableOpacity>
-                    <View style={styles.register}>
-                        <Text style={styles.registerText}>Don't have an account?</Text>
-                        <TouchableOpacity
-                            onPress={() => Actions.signup()}
-                        >
-                            <Text style={styles.loginText}> Register </Text>
-                        </TouchableOpacity>
-                    </View>
 				</View>
 		);
 	}
@@ -88,4 +80,4 @@ function matchDispatchToProps(dispatch) {
 const mapStateToProps = state => ({
 });
 
-export default connect(null, null)(SignIn);
+export default connect(null, null)(SignUp);

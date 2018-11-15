@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import MapScreen from './src/components/map';
 import SignIn from './src/components/signin';
+import SignUp from './src/components/signup';
 
 import configureStore from './src/utils/store';
 let { store, persistor } = configureStore();
@@ -22,6 +23,12 @@ export default class App extends Component {
 								hideNavBar
 								component={SignIn}
 								initial
+							/>
+							<Scene
+								key="signup"
+								hideNavBar
+								component={SignUp}
+								// initial
 							/>
 							<Scene
 								key="map"

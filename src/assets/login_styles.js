@@ -21,5 +21,13 @@ export const styles = StyleSheet.create({
         textAlign:'center',
         fontWeight:'500',
         fontSize:15
+    },
+    register:{
+        paddingTop:height/50,
+        flexDirection:'row',
+        alignSelf:'center'
+    },
+    registerText:{
+        fontSize:15
     }
 });
