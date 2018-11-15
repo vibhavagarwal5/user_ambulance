@@ -11,19 +11,8 @@ import {
     set_curr_region
 } from '../actions/locationAction';
 import Config from 'react-native-config'
+import {styles} from '../assets/map_styles'
 
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        height: null,
-        width: null,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    map: {
-        ...StyleSheet.absoluteFillObject
-    }
-});
 
 class MapScreen extends Component {
     constructor(props) {
@@ -48,15 +37,15 @@ class MapScreen extends Component {
     
 	componentDidMount() {
         this.props.watchCurrLocation();
-		var self = this;
-		setInterval(function() {
-			self.setState({
-				origin:{
-                    latitude: self.state.origin.latitude + 0.001,
-                    longitude: self.state.origin.longitude + 0.001
-                }
-			});
-		}, 5000);
+		// var self = this;
+		// setInterval(function() {
+		// 	self.setState({
+		// 		origin:{
+        //             latitude: self.state.origin.latitude + 0.001,
+        //             longitude: self.state.origin.longitude + 0.001
+        //         }
+		// 	});
+		// }, 5000);
     }
     
     onRegionChange(region) {

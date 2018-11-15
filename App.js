@@ -4,6 +4,7 @@ import { Scene, Drawer, Router } from 'react-native-router-flux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import MapScreen from './src/components/map';
+import SignIn from './src/components/signin';
 
 import configureStore from './src/utils/store';
 let { store, persistor } = configureStore();
@@ -17,10 +18,15 @@ export default class App extends Component {
 					<ConnectedRouter>
 						<Scene key="root">
 							<Scene
+								key="signin"
+								hideNavBar
+								component={SignIn}
+								initial
+							/>
+							<Scene
 								key="map"
 								hideNavBar
 								component={MapScreen}
-								initial
 							/>
 						</Scene>
 					</ConnectedRouter>
