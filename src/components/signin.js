@@ -6,6 +6,7 @@ import {
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {styles} from '../assets/login_styles'
+import {signin} from '../actions/loginAction';
 
 class SignIn extends Component {
     constructor(props) {
@@ -13,12 +14,14 @@ class SignIn extends Component {
 		this.state = {
             name:'',
             dob:'',
-            phone:''
+            contact_number:''
         };
     }
 
     handleSignIn(){
-        Actions.map();
+        this.props.signin(this.state).then(()=>{
+            Actions.map()
+        })
     }
     
 	render() {
@@ -28,7 +31,7 @@ class SignIn extends Component {
                     <Text>Name</Text>
                     <TextInput
                         ref={input => (this.unameInput = input)}
-                        onChangeText={email => this.setState({ email })}
+                        onChangeText={name => this.setState({ name })}
                         onSubmitEditing={() => this.dobInput.focus()}
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -36,7 +39,7 @@ class SignIn extends Component {
                         placeholder="Name"
                         underlineColorAndroid='black'
                     />
-                    <Text>Date of Birth</Text>
+                    <Text style={styles.inputfieldText}>Date of Birth</Text>
                     <TextInput
                         ref={input => (this.dobInput = input)}
                         onChangeText={dob => this.setState({ dob })}
@@ -47,10 +50,10 @@ class SignIn extends Component {
                         placeholder="Date of Birth (Optional)"
                         underlineColorAndroid='black'
                     />
-                    <Text>Contact Number</Text>
+                    <Text style={styles.inputfieldText}>Contact Number</Text>
                     <TextInput
                         ref={input => (this.phoneInput = input)}
-                        onChangeText={phone => this.setState({ phone })}
+                        onChangeText={contact_number => this.setState({ contact_number })}
                         autoCapitalize="none"
                         autoCorrect={false}
                         keyboardType='number-pad'
@@ -80,12 +83,14 @@ class SignIn extends Component {
 function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
+            signin: signin
         },
         dispatch
     );
 }
 
-const mapStateToProps = state => ({
-});
+// const mapStateToProps = state => ({
+//     user: state.login.user
+// });
 
-export default connect(null, null)(SignIn);
+export default connect(null, matchDispatchToProps)(SignIn);

@@ -8,11 +8,19 @@ export const styles = StyleSheet.create({
         paddingHorizontal:width * 0.15,
         paddingTop:height * 0.15
     },
+    backButton:{
+        position:'absolute',
+        top:height/20,
+        left:width/20
+    },
     heading:{
         fontSize:20,
         marginBottom:height/17,
         fontWeight:'bold',
         textAlign:'center'
+    },
+    inputfieldText:{
+        paddingTop:height/50
     },
     loginButton:{
         paddingTop:height/50,

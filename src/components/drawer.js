@@ -16,11 +16,8 @@ class DrawerContent extends Component {
 	render() {
         return (
             <ScrollView style={styles.container}>
-                <TouchableHighlight onPress={()=>Actions.signup()}>
-                    <Text style={styles.option}>SignUp</Text>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={()=>Actions.signup()}>
-                    <Text style={styles.option}>SignUp</Text>
+                <TouchableHighlight onPress={()=>{}}>
+                    <Text style={styles.option}>Logout</Text>
                 </TouchableHighlight>
             </ScrollView>
         );

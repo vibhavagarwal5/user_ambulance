@@ -10,11 +10,12 @@ import {
     watchCurrLocation,
     set_curr_region
 } from '../actions/locationAction';
+import {bookTrip} from '../actions/tripAction';
 import Config from 'react-native-config'
 import { styles } from '../assets/map_styles'
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { Actions } from 'react-native-router-flux';
-
+import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 
 class MapScreen extends Component {
     constructor(props) {
@@ -39,15 +40,17 @@ class MapScreen extends Component {
 
     componentDidMount() {
         this.props.watchCurrLocation();
-        // var self = this;
-        // setInterval(function() {
-        // 	self.setState({
-        // 		origin:{
-        //             latitude: self.state.origin.latitude + 0.001,
-        //             longitude: self.state.origin.longitude + 0.001
-        //         }
-        // 	});
-        // }, 5000);
+        if(this.props.trip !== null){
+            var self = this;
+            setInterval(function() {
+                self.setState({
+                    origin:{
+                        latitude: self.state.origin.latitude + 0.001,
+                        longitude: self.state.origin.longitude + 0.001
+                    }
+                });
+            }, 5000);
+        }
     }
 
     onRegionChange(region) {
@@ -55,10 +58,31 @@ class MapScreen extends Component {
         this.props.set_curr_region(region)
     }
 
+    bookTrip(){
+        var params={
+            patient_id: this.props.login.user.id,
+            start_latitude: this.props.curr_coordinates.latitude,
+            start_longitude: this.props.curr_coordinates.longitude
+        }
+        this.props.bookTrip(params).then(()=>{
+            console.log(this.props.trip);
+            var self = this;
+            setInterval(function() {
+                self.setState({
+                    origin:{
+                        latitude: self.state.origin.latitude + 0.001,
+                        longitude: self.state.origin.longitude + 0.001
+                    }
+                });
+            }, 5000);
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <MapView
+                    showCompassOnRotate={false}
                     style={styles.map}
                     initialRegion={
                         this.state.curr_region
@@ -78,26 +102,41 @@ class MapScreen extends Component {
                     />
                 </MapView>
                 <TouchableOpacity
-                    onPress={()=>{
-                        console.log(1);
-                        
-                        Actions.drawerOpen()
-                    }}
+                    onPress={()=>{}}
                     style={styles.menu}
                 >
                     <Icon
-                        name="menu"
+                        name="logout"
                         size={30}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() => {}}
-                    style={styles.bookContainer}>
-                    <Text style={styles.bookText}>
-                        Book
-                    </Text>
-                </TouchableOpacity>
+                {
+                    this.props.trip===null?
+                    <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => {this.bookTrip()}}
+                        style={styles.bookContainer}>
+                        <Text style={styles.bookText}>
+                            Book
+                        </Text>
+                    </TouchableOpacity>
+                    :
+                    <View style={styles.ambulanceDetails}>
+                        <Text>
+                            Ambulance No: {this.props.trip.ambulance_id[0].fields.number_plate}
+                        </Text>
+                        <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() => {
+                            RNImmediatePhoneCall.immediatePhoneCall(this.props.trip.ambulance_id[0].fields.contact_number);
+                        }}
+                        style={styles.bookContainer}>
+                            <Text style={styles.bookText}>
+                                Call the driver
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                }
             </View>
         );
     }
@@ -107,7 +146,8 @@ function matchDispatchToProps(dispatch) {
     return bindActionCreators(
         {
             watchCurrLocation: watchCurrLocation,
-            set_curr_region: set_curr_region
+            set_curr_region: set_curr_region,
+            bookTrip: bookTrip
         },
         dispatch
     );
@@ -115,7 +155,9 @@ function matchDispatchToProps(dispatch) {
 
 const mapStateToProps = state => ({
     curr_coordinates: state.location.curr_coordinates,
-    curr_region: state.location.curr_region
+    curr_region: state.location.curr_region,
+    login: state.login,
+    trip: state.trip.trip
 });
 
 export default connect(mapStateToProps, matchDispatchToProps)(MapScreen);
