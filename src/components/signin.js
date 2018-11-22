@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import {styles} from '../assets/login_styles'
 import {signin} from '../actions/loginAction';
+import DatePicker from 'react-native-datepicker'
 
 class SignIn extends Component {
     constructor(props) {
@@ -16,6 +17,12 @@ class SignIn extends Component {
             dob:'',
             contact_number:''
         };
+    }
+
+    today(){
+        var today = new Date();
+        date=today.getFullYear() + "/"+ parseInt(today.getMonth()+1) +"/"+ today.getDate();
+        return date
     }
 
     handleSignIn(){
@@ -32,7 +39,6 @@ class SignIn extends Component {
                     <TextInput
                         ref={input => (this.unameInput = input)}
                         onChangeText={name => this.setState({ name })}
-                        onSubmitEditing={() => this.dobInput.focus()}
                         autoCapitalize="none"
                         autoCorrect={false}
                         returnKeyType="next"
@@ -40,7 +46,7 @@ class SignIn extends Component {
                         underlineColorAndroid='black'
                     />
                     <Text style={styles.inputfieldText}>Date of Birth</Text>
-                    <TextInput
+                    {/* <TextInput
                         ref={input => (this.dobInput = input)}
                         onChangeText={dob => this.setState({ dob })}
                         onSubmitEditing={() => this.phoneInput.focus()}
@@ -49,7 +55,33 @@ class SignIn extends Component {
                         returnKeyType="next"
                         placeholder="Date of Birth (Optional)"
                         underlineColorAndroid='black'
-                    />
+                    /> */}
+                    <DatePicker
+                        style={styles.dateInput}
+                        mode="date"
+                        androidMode='spinner'
+                        placeholder={
+                            this.state.dob===''
+                            ? "Select your Date of Birth"
+                            : this.state.dob
+                        }
+                        format="YYYY-MM-DD"
+                        minDate={'1900/01/01'}
+                        maxDate={this.today()}
+                        showIcon={false}
+                        customStyles={{
+                            dateInput: {
+                            borderRadius:10,
+                            borderWidth:1.4
+                            },
+                            placeholderText:{
+                            fontWeight:'400',
+                            fontSize:15,
+                            color:'#4c4e51'
+                            }
+                        }}
+                        onDateChange={(dob) => {this.setState({dob})}}
+                        />
                     <Text style={styles.inputfieldText}>Contact Number</Text>
                     <TextInput
                         ref={input => (this.phoneInput = input)}

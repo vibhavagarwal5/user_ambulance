@@ -16,6 +16,7 @@ import {
     flipTrip,
     endTrip
 } from '../actions/tripAction';
+import { signout } from '../actions/loginAction';
 import Config from 'react-native-config'
 import { styles } from '../assets/map_styles'
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -143,6 +144,11 @@ class MapScreen extends Component {
         })
     }
 
+    handleSignout(){
+        this.props.signout();
+        Actions.signin();
+    }
+
     render() {
         console.log(this.state);
         
@@ -187,7 +193,7 @@ class MapScreen extends Component {
                     }
                 </MapView>
                 <TouchableOpacity
-                    onPress={()=>{}}
+                    onPress={()=>{this.handleSignout()}}
                     style={styles.menu}
                 >
                     <Icon
@@ -235,7 +241,8 @@ function matchDispatchToProps(dispatch) {
             bookTrip: bookTrip,
             getTrip: getTrip,
             flipTrip: flipTrip,
-            endTrip: endTrip
+            endTrip: endTrip,
+            signout: signout
         },
         dispatch
     );

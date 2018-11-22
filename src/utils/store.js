@@ -20,7 +20,7 @@ const config = {
 		createWhitelistFilter('location', [
 			'curr_coordinates',
 		])
-		// createWhitelistFilter('emergencyPlaces', []),
+		// createWhitelistFilter('login', ['user','loading']),
 		// createWhitelistFilter('slides')
 	]
 };
@@ -28,9 +28,9 @@ const config = {
 //Linking all the reducers with the redux-persist and applying all the middlewares to it.
 const combinedReducer = persistCombineReducers(config, allReducers);
 const reducers = (state, action) => {
-	// if (action.type === 'SIGN_OUT') {
-	// 	state = undefined;
-	// }
+	if (action.type === 'SIGN_OUT') {
+		state = undefined;
+	}
 	return combinedReducer(state, action);
 };
 const enhancers = applyMiddleware(thunk, promise, createLogger());

@@ -1,5 +1,6 @@
 import {
     SIGNIN,
+    SIGN_OUT,
     LOGIN_LOADING
 } from '../actions/types';
 
@@ -27,6 +28,10 @@ export default function (state = INITIAL_STATE, action) {
             return {
                 ...result,
                 loading: action.loading
+            };
+        case SIGN_OUT:
+            return {
+                ...state
             };
         default:
             return state;

@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
     inputfieldText:{
         paddingTop:height/50
     },
+    dateInput:{
+        width: width * 0.7,
+        paddingTop:height/50,
+        justifyContent:'center',
+        alignSelf:'center'
+    },
     loginButton:{
         paddingTop:height/50,
     },
