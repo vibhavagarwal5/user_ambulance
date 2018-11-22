@@ -16,30 +16,23 @@ const ConnectedRouter = connect()(Router);
 
 export default class App extends Component {
 	render() {
-		var initial = true;
 		console.log(store.getState().login);
-		
-		if(store.getState().login.token!==null){
-			initial = false
-		}
 		return (
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<ConnectedRouter>
 						<Scene key="root">
-							{/* <Scene
+							<Scene
 								key="signin"
 								hideNavBar
 								component={SignIn}
-								initial={initial}
 							/>
 							<Scene
 								key="signup"
 								hideNavBar
 								component={SignUp}
-							/> */}
+							/>
 							<Scene
-								// initial={!initial}
 								drawer
 								hideNavBar
 								key="drawer"

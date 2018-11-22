@@ -1,5 +1,5 @@
 import {
-    API_URL, LOGIN_LOADING, SIGNUP, SIGNIN
+    API_URL, LOGIN_LOADING, SIGNIN
 } from './types';
 import {
     handleError
@@ -13,8 +13,7 @@ export const signup = (body) => {
         return new Promise((resolve, reject) => {
             axios.post(API_URL+'patient/signup/',body).then((response) => {
                 console.log('response',response);
-                resolve(dispatch(signupHelper(response.data)));
-                dispatch(loginLoading(false));
+                resolve(dispatch(loginLoading(false)));
             })
             .catch(error =>{
                 reject(handleError(error));
@@ -31,7 +30,7 @@ export const signin = (body) => {
         return new Promise((resolve, reject) => {
             axios.post(API_URL+'patient/signin/',body).then((response) => {
                 console.log('response',response);
-                resolve(dispatch(signinHelper(response.data.token)));
+                resolve(dispatch(signinHelper(response.data)));
                 dispatch(loginLoading(false));
             })
             .catch(error =>{
@@ -49,16 +48,9 @@ export function loginLoading(bool) {
     };
 }
 
-export function signupHelper(details) {
-    return {
-        type: SIGNUP,
-        user: details
-    };
-}
-
-export function signinHelper(token) {
+export function signinHelper(details) {
     return {
         type: SIGNIN,
-        token: 'Token ' +token
+        user: details
     };
 }

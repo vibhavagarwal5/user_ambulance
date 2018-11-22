@@ -32,12 +32,15 @@ export const styles = StyleSheet.create({
     },
     ambulanceDetails:{
         backgroundColor:'white',
-        paddingVertical:10,
+        paddingVertical:height/60,
         borderRadius:10,
-        marginHorizontal:30,
-        marginBottom:30,
+        marginHorizontal:width/30,
+        marginBottom:height/50,
         elevation:10,
         alignItems:'center'
+    },
+    ambulanceNo:{
+        marginBottom:height/100
     }
 });
 

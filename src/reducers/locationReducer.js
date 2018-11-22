@@ -21,11 +21,7 @@ export default function (state = INITIAL_STATE, action) {
         case CURR_LOCATION:
             return {
                 ...result,
-                curr_coordinates: {
-                    ...result.curr_coordinates,
-                    latitude: action.curr_coordinates.latitude,
-                    longitude: action.curr_coordinates.longitude
-                }
+                curr_coordinates: action.curr_coordinates
             };
         case CURR_REGION:
             return {
